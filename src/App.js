@@ -7,10 +7,11 @@ function App() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('https://hello-world-9yb9.onrender.com/>')
+    fetch('https://hello-world-9yb9.onrender.com')  // Use actual Flask URL here
       .then(response => response.text())
-      .then(data => setMessage(data));
-  }, []);
+      .then(data => setMessage(data))
+      .catch(error => console.error('Error fetching data:', error));  // Log errors
+}, []);
 
   return (
     <div>
