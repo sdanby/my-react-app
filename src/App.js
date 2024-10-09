@@ -13,9 +13,15 @@ const App = () => {
     const [events, setEvents] = useState([]); // State to hold events
 
     // Function to format the date from YYYY-MM-DD to DD/MM/YYYY
+    // Function to convert a Date object to required string format
     const formatDate = (date) => {
-        const parts = date.split('-'); // Split date into [YYYY, MM, DD]
-        return `${parts[2]}/${parts[1]}/${parts[0]}`; // Return as DD/MM/YYYY
+        if (date instanceof Date) {
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`; // Return in YYYY-MM-DD format for API
+        }
+        return ''; // Handle cases where the input is not a Date object
     };
     const formatTime = (time) => {
         if (!time) return 'N/A';
@@ -105,7 +111,7 @@ const App = () => {
                     value={eventDate} 
                     onChange={(e) => setEventDate(e.target.value)} 
                     required
-                /> */}
+                />
                 {/* Date Picker for selecting event date */}
                 <DatePicker
                     selected={eventDate}
