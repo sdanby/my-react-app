@@ -11,6 +11,10 @@ const App = () => {
     const [events, setEvents] = useState([]); // State to hold events
 
     // Function to format the date from YYYY-MM-DD to DD/MM/YYYY
+    const formatDate = (date) => {
+        const parts = date.split('-'); // Split date into [YYYY, MM, DD]
+        return `${parts[2]}/${parts[1]}/${parts[0]}`; // Return as DD/MM/YYYY
+    };
     const formatTime = (time) => {
         if (!time) return 'N/A';
     
@@ -24,6 +28,7 @@ const App = () => {
             return 'Invalid time format'; // Handle unexpected formats
         }
     }
+    
 
     // Fetch events from Flask API when the component mounts
     useEffect(() => {
@@ -49,7 +54,7 @@ const App = () => {
         if (eventCode && eventDate) {
             try {
                 setLoading(true);
-                const newFormattedDate = formatTime(eventDate); // Convert date format
+                const newFormattedDate = formatDate(eventDate); // Convert date format
                 setFormattedDate(newFormattedDate);
 
                 const response = await fetch(`https://hello-world-9yb9.onrender.com/api/eventpositions?event_code=${eventCode}&event_date=${newFormattedDate}`); // Your Flask API URL
@@ -124,7 +129,7 @@ const App = () => {
                         <tr key={`${athlete.position}-${athlete.event_code}`}>
                             <td>{athlete.position}</td>
                             <td>{athlete.name}</td>
-                            <td>{athlete.time}</td>
+                            <td>{formatTime(athlete.time)}</td>  {/* Assuming formatTime function is defined to handle the time correctly */}
                             <td>{athlete.age_group}</td>
                             <td>{athlete.age_grade}</td>
                             <td>{athlete.club}</td>
