@@ -11,7 +11,7 @@ const App = () => {
     const [events, setEvents] = useState([]); // State to hold events
 
     // Function to format the date from YYYY-MM-DD to DD/MM/YYYY
-    const formatDate = (time) => {
+    const formatTime = (time) => {
         if (!time) return 'N/A';
     
         // Check if the time contains tenths of a second
@@ -49,7 +49,7 @@ const App = () => {
         if (eventCode && eventDate) {
             try {
                 setLoading(true);
-                const newFormattedDate = formatDate(eventDate); // Convert date format
+                const newFormattedDate = formatTime(eventDate); // Convert date format
                 setFormattedDate(newFormattedDate);
 
                 const response = await fetch(`https://hello-world-9yb9.onrender.com/api/eventpositions?event_code=${eventCode}&event_date=${newFormattedDate}`); // Your Flask API URL
