@@ -11,10 +11,19 @@ const App = () => {
     const [events, setEvents] = useState([]); // State to hold events
 
     // Function to format the date from YYYY-MM-DD to DD/MM/YYYY
-    const formatDate = (date) => {
-        const parts = date.split('-'); // Split date into [YYYY, MM, DD]
-        return `${parts[2]}/${parts[1]}/${parts[0]}`; // Return as DD/MM/YYYY
-    };
+    const formatTime = (time) => {
+        if (!time) return 'N/A';
+    
+        // Check if the time contains tenths of a second
+        const parts = time.split(':');
+        if (parts.length === 3) { // mm:ss:tt format
+            return `${parts[0]}:${parts[1]}`; // Convert to mm:ss by dropping tenths
+        } else if (parts.length === 2) { // mm:ss format
+            return time; // Already in mm:ss format
+        } else {
+            return 'Invalid time format'; // Handle unexpected formats
+        }
+    }
 
     // Fetch events from Flask API when the component mounts
     useEffect(() => {
