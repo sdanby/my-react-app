@@ -11,7 +11,7 @@ const App = () => {
     const [events, setEvents] = useState([]); // State to hold events
 
     // Function to format the date from YYYY-MM-DD to DD/MM/YYYY
-    const formatTime = (time) => {
+    const formatDate = (time) => {
         if (!time) return 'N/A';
     
         // Check if the time contains tenths of a second
