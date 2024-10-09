@@ -5,12 +5,18 @@ const App = () => {
     const [athletes, setAthletes] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [eventCode, setEventCode] = useState(''); // Holds the event code
-    const [eventDate, setEventDate] = useState(''); // Holds the event date
+    const [eventCode, setEventCode] = useState(''); // This will hold the event code
+    const [eventDate, setEventDate] = useState(''); // This will hold the event date
     const [formattedDate, setFormattedDate] = useState('');
     const [events, setEvents] = useState([]); // State to hold events
 
-    // Function to fetch events from Flask API
+    // Function to format the date from YYYY-MM-DD to DD/MM/YYYY
+    const formatDate = (date) => {
+        const parts = date.split('-'); // Split date into [YYYY, MM, DD]
+        return `${parts[2]}/${parts[1]}/${parts[0]}`; // Return as DD/MM/YYYY
+    };
+
+    // Fetch events from Flask API when the component mounts
     useEffect(() => {
         const fetchEvents = async () => {
             try {
@@ -22,7 +28,7 @@ const App = () => {
                 setEvents(data); // Store the events in the state
             } catch (err) {
                 console.error('Error fetching events:', err);
-                setError(err.message);
+                setError(err.message); // Set error message
             }
         };
 
@@ -34,21 +40,21 @@ const App = () => {
         if (eventCode && eventDate) {
             try {
                 setLoading(true);
-                const newFormattedDate = formatDate(eventDate); // Assuming formatDate formats properly
+                const newFormattedDate = formatDate(eventDate); // Convert date format
                 setFormattedDate(newFormattedDate);
 
-                const response = await fetch(`https://hello-world-9yb9.onrender.com/api/eventpositions?event_code=${eventCode}&event_date=${newFormattedDate}`);
+                const response = await fetch(`https://hello-world-9yb9.onrender.com/api/eventpositions?event_code=${eventCode}&event_date=${newFormattedDate}`); // Your Flask API URL
                 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
                 setAthletes(data); // Set the athletes data
-                setError(null);
+                setError(null); // Clear any previous error
             } catch (err) {
-                setError(err.message);
+                setError(err.message); // Set error message
             } finally {
-                setLoading(false);
+                setLoading(false); // Stop loading
             }
         } else {
             alert('Please enter both Event Name and Event Date.');
@@ -60,6 +66,7 @@ const App = () => {
             <h1>Event Positions</h1>
 
             <div className="input-container">
+                {/* Dropdown to select events */}
                 <select 
                     id="event-select" 
                     value={eventCode} 
@@ -74,6 +81,7 @@ const App = () => {
                     ))}
                 </select>
 
+                {/* Date input field */}
                 <input 
                     id="date-select"
                     type="date" 
@@ -81,7 +89,7 @@ const App = () => {
                     onChange={(e) => setEventDate(e.target.value)} 
                     required
                 />
-
+                
                 <button onClick={fetchAthletes}>Fetch Data</button>
             </div>
 
