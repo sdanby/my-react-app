@@ -67,9 +67,9 @@
   }
 }
 .input-container {
-  display: flex;
-  flex-direction: column; /* Stack items vertically */
-  margin: 10px 0;
+  display: flex; /* Use flexbox for horizontal alignment */
+  align-items: center; /* Center items vertically within the flex container */
+  margin: 10px 0; /* Margin to separate  */
 }
 
 .input-container select,

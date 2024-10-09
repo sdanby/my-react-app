@@ -62,7 +62,8 @@ const App = () => {
         if (eventCode && eventDate) {
             try {
                 setLoading(true);
-                const newFormattedDate = formatDate(eventDate); // Convert date format
+                // Format the Date Object to YYYY-MM-DD for API request
+                const newFormattedDate = eventDate ? eventDate.toISOString().split('T')[0] : '';
                 setFormattedDate(newFormattedDate);
 
                 const response = await fetch(`https://hello-world-9yb9.onrender.com/api/eventpositions?event_code=${eventCode}&event_date=${newFormattedDate}`); // Your Flask API URL
