@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css'; // Ensure to import your CSS file for styling
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css"; // Importing the CSS for the date picker
 
 const App = () => {
     const [athletes, setAthletes] = useState([]);
@@ -96,12 +98,21 @@ const App = () => {
                 </select>
 
                 {/* Date input field */}
+                {/*
                 <input 
                     id="date-select"
                     type="date" 
                     value={eventDate} 
                     onChange={(e) => setEventDate(e.target.value)} 
                     required
+                /> */}
+                {/* Date Picker for selecting event date */}
+                <DatePicker
+                    selected={eventDate}
+                    onChange={(date) => setEventDate(date)} // Update state with chosen date
+                    dateFormat="dd/MM/yyyy" // Display the selected date format
+                    className="date-picker" // Assign class for styling
+                    placeholderText="Select Event Date" // Placeholder text
                 />
                 
                 <button onClick={fetchAthletes}>Fetch Data</button>

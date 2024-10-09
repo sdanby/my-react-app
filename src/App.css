@@ -66,4 +66,20 @@
       white-space: nowrap; /* Prevent table data from wrapping */
   }
 }
+.input-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  margin: 10px 0;
+}
+
+.input-container select,
+.input-container input {
+  padding: 10px; /* Padding for select/input elements */
+  font-size: 16px; /* Font size for readability on mobile */
+  margin: 5px 0; /* Margin to separate elements */
+}
+
+.date-picker {
+  width: 100%; /* Make the date picker take the full width */
+}
 
