@@ -6,7 +6,7 @@ const App = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [eventCode, setEventCode] = useState(''); // This will hold the event code
-    const [eventDate, setEventDate] = useState('');
+    const [eventDate, setEventDate] = useState(''); // This will hold the event date
     const [formattedDate, setFormattedDate] = useState('');
     const [events, setEvents] = useState([]); // State to hold events
 
@@ -20,8 +20,7 @@ const App = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                // Use your actual Render endpoint
-                const response = await fetch('https://hello-world-9yb9.onrender.com/api/events');
+                const response = await fetch('https://hello-world-9yb9.onrender.com/api/events'); // Your Flask API URL
                 if (!response.ok) {
                     throw new Error('Failed to fetch events');
                 }
@@ -29,13 +28,14 @@ const App = () => {
                 setEvents(data); // Store the events in the state
             } catch (err) {
                 console.error('Error fetching events:', err);
+                setError(err.message); // Set error message
             }
         };
 
         fetchEvents();
     }, []);
 
-    // Function to fetch athletes based on the selected event code and date
+    // Function to fetch athletes based on selected event code and date
     const fetchAthletes = async () => {
         if (eventCode && eventDate) {
             try {
@@ -43,22 +43,21 @@ const App = () => {
                 const newFormattedDate = formatDate(eventDate);
                 setFormattedDate(newFormattedDate);
                 
-                // Use your Render endpoint for fetching athletes
-                const response = await fetch(`https://hello-world-9yb9.onrender.com/api/eventpositions?event_code=${eventCode}&event_date=${newFormattedDate}`);
-                
+                const response = await fetch(`https://hello-world-9yb9.onrender.com/api/eventpositions?event_code=${eventCode}&event_date=${newFormattedDate}`); // Your Flask API URL
+
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
                 setAthletes(data); // Set the athletes data
-                setError(null);  // Clear any previous error
+                setError(null); // Clear any previous error
             } catch (err) {
-                setError(err.message);  // Set error message
+                setError(err.message); // Set error message
             } finally {
                 setLoading(false); // Stop loading
             }
         } else {
-            alert('Please enter both Event and Event Date.');
+            alert('Please enter both Event Name and Event Date.');
         }
     };
 
@@ -91,7 +90,7 @@ const App = () => {
                     required
                 />
                 
-                <button onClick={fetchAthletes}>Fetch Athletes</button>
+                <button onClick={fetchAthletes}>Fetch Data</button>
             </div>
 
             {formattedDate && <h2 className="selected-date">Selected Date: {formattedDate}</h2>} 
@@ -99,15 +98,36 @@ const App = () => {
             {loading && <div>Loading...</div>}
             {error && <div className="error">Error: {error}</div>}
 
-            <ul className="athletes-list">
-                {athletes.map((athlete) => (
-                    <li key={`${athlete.position}-${athlete.event_code}`}>
-                        Position: {athlete.position}, Name: {athlete.name}, Time: {athlete.time}, Club: {athlete.club}, Comment: {athlete.comment}
-                    </li>
-                ))}
-            </ul>
+            <table className="athletes-table">
+                <thead>
+                    <tr>
+                        <th>Pos</th>
+                        <th>Name</th>
+                        <th>Time</th>
+                        <th>Age Group</th>
+                        <th>Age Grade</th>
+                        <th>Club</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {athletes.map((athlete) => (
+                        <tr key={`${athlete.position}-${athlete.event_code}`}>
+                            <td>{athlete.position}</td>
+                            <td>{athlete.name}</td>
+                            <td>{athlete.time}</td>
+                            <td>{athlete.age_group}</td>
+                            <td>{athlete.age_grade}</td>
+                            <td>{athlete.age_grade}</td>
+                            <td>{athlete.club}</td>
+                            <td>{athlete.comment}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };
 
 export default App;
+

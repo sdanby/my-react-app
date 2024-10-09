@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+
+.app-container {
+  padding: 20px;
+}
+
+.athletes-table {
+  width: 100%;
+  border-collapse: collapse; /* Merges borders for a cleaner look */
+}
+
+.athletes-table th, .athletes-table td {
+  text-align: left; /* Left align text */
+  padding: 8px; /* Add padding for table cells */
+  border: 1px solid #d3d3d3; /* Thin grey grid */
+}
+
+.athletes-table th {
+  background-color: #f2f2f2; /* Light gray background for header */
+  position: sticky; /* Allows the header to stick */
+  top: 0; /* Sticks to the top of the table */
+  z-index: 10; /* Make sure the header is on top of the table data */
+}
+
+@media (max-width: 600px) {
+  .athletes-table {
+      display: block; /* Make table block to allow scrolling */
+      overflow-x: auto; /* Allow horizontal scrolling */
+      white-space: nowrap; /* Prevent table data from wrapping */
+  }
+}
+
