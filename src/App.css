@@ -42,21 +42,21 @@
 }
 
 .athletes-table {
-  width: 100%;
-  border-collapse: collapse; /* Merges borders for a cleaner look */
+  width: 100%; /* Full width for the table */
+  border-collapse: collapse; /* Merge borders */
 }
 
 .athletes-table th, .athletes-table td {
   text-align: left; /* Left align text */
-  padding: 8px; /* Add padding for table cells */
+  padding: 8px; /* Cell padding */
   border: 1px solid #d3d3d3; /* Thin grey grid */
 }
 
 .athletes-table th {
   background-color: #f2f2f2; /* Light gray background for header */
-  position: sticky; /* Allows the header to stick */
-  top: 0; /* Sticks to the top of the table */
-  z-index: 10; /* Make sure the header is on top of the table data */
+  position: sticky; /* Sticky header */
+  top: 0; /* Remain at the top of the table */
+  z-index: 10; /* Ensure header is on top of table data */
 }
 
 @media (max-width: 600px) {
@@ -67,19 +67,24 @@
   }
 }
 .input-container {
-  display: flex; /* Use flexbox for horizontal alignment */
-  align-items: center; /* Center items vertically within the flex container */
-  margin: 10px 0; /* Margin to separate  */
+  display: flex; /* Use flexbox for horizontal layout */
+  align-items: center; /* Center items vertically */
+  margin: 15px 0; /* Margin for spacing between input and other components */
 }
 
 .input-container select,
-.input-container input {
-  padding: 10px; /* Padding for select/input elements */
-  font-size: 16px; /* Font size for readability on mobile */
-  margin: 5px 0; /* Margin to separate elements */
+.input-container .date-picker,
+.input-container button {
+    padding: 8px; /* Padding for comfort */
+    font-size: 16px; /* Font size */
+    margin-right: 10px; /* Right margin for spacing between elements */
 }
 
 .date-picker {
-  width: 100%; /* Make the date picker take the full width */
+  width: 150px; /* Adjust width to make it smaller */
+}
+
+.react-datepicker {
+  z-index: 1000; /* A high z-index to keep the date picker on top */
 }
 
