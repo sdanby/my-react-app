@@ -64,10 +64,11 @@ const App = () => {
                 setLoading(true);
                 
                 // Format the Date object to DD/MM/YYYY for the API request
-                const day = eventDate.getDate().toString().padStart(2, '0'); // Get day
-                const month = (eventDate.getMonth() + 1).toString().padStart(2, '0'); // Get month (zero-based)
-                const year = eventDate.getFullYear(); // Get year
-                const newFormattedDate = `${day}/${month}/${year}`; // Format as DD/MM/YYYY
+                //const day = eventDate.getDate().toString().padStart(2, '0'); // Get day
+                //const month = (eventDate.getMonth() + 1).toString().padStart(2, '0'); // Get month (zero-based)
+                //const year = eventDate.getFullYear(); // Get year
+                //const newFormattedDate = `${day}/${month}/${year}`; // Format as DD/MM/YYYY
+                const newFormattedDate = eventDate ? formatDate(eventDate) : ''; // Format Date
                 setFormattedDate(newFormattedDate);  
 
                 // Log the URL to be fetched
