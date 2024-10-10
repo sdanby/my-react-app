@@ -2,6 +2,17 @@
   text-align: center;
 }
 
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -13,49 +24,34 @@
   color: white;
 }
 
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.react-datepicker {
+  z-index: 1000; /* A high z-index to keep the date picker on top */
+}
+
+
+
 .app-container {
   padding: 20px;
 }
 
-.input-container {
-  display: flex; /* Arrange inputs in a row */
-  flex-direction: row; /* Ensure they are in a row */
-  align-items: center; /* Center items vertically */
-  margin: 15px 0; /* Margin for spacing between inputs */
-}
-
-.input-container select,
-.input-container .date-picker,
-.input-container button {
-  padding: 10px; /* Consistent padding for comfort */
-  font-size: 16px; /* Adjust font size for readability */
-  margin-right: 10px; /* Margin between inputs */
-  border: 1px solid #ccc; /* Add a border */
-  border-radius: 4px; /* Rounded corners for a rectangular appearance */
-}
-
-/* Adjust the width of select and date-picker for mobile */
-.input-container select {
-  width: auto; /* Default width */
-  min-width: 120px; /* Minimum width for mobile */
-}
-.date-picker {
-  width: 75%; /* Reduce width by 25% */
-}
-
-.input-container button {
-  padding: 8px; /* Adjust padding */
-  width: 75%; /* Make button smaller */
-}
-
-/* Athletes Table Styles */
 .athletes-table {
   width: 100%; /* Full width for the table */
   border-collapse: collapse; /* Merge borders */
 }
 
-.athletes-table th,
-.athletes-table td {
+.athletes-table th, .athletes-table td {
   text-align: left; /* Left align text */
   padding: 8px; /* Cell padding */
   border: 1px solid #d3d3d3; /* Thin grey grid */
@@ -65,10 +61,10 @@
   background-color: #f2f2f2; /* Light gray background for header */
   position: sticky; /* Sticky header */
   top: 0; /* Remain at the top of the table */
-  z-index: 10; /* Ensure header is on top of table data */
+  /*z-index: 10; /* Ensure header is on top of table data */
 }
 
-/* Responsive Styles */
+/* Mobile CSS adjustments */
 @media (max-width: 600px) {
   .input-container {
       flex-direction: column; /* Stack form elements vertically on mobile */
@@ -80,10 +76,39 @@
       width: 100%; /* Full width on mobile */
       margin-right: 0; /* No right margin for full width */
       margin-bottom: 10px; /* Space between elements */
-      min-width: auto; /* Remove min-width for mobile */
-  }
-
-  .date-picker {
-      width: auto; /* Set the date picker to automatic width on mobile */
   }
 }
+.input-container {
+  display: flex; /* Arrange inputs in a row */
+  flex-direction: row; /* Ensure they are in a row */
+  align-items: center; /* Center items vertically */
+  margin: 15px 0; /* Margin for spacing */
+}
+
+.input-container select,
+.input-container .date-picker,
+.input-container button {
+    padding: 10px; /* Consistent padding for comfort */
+    font-size: 16px; /* Adjust font size for readability */
+    margin-right: 10px; /* Margin between inputs */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 4px; /* Rounded corners for a rectangular appearance */
+    width: auto; /* Allow browsers to choose the best width */
+    min-width: 150px; /* Set a minimum width for mobile */
+}
+
+/*
+.date-picker {
+  width: 150px; /* Adjust width to make it smaller */
+
+
+.date-picker {
+  /* Make the date picker styled consistently */
+  display: inline-block; 
+  margin-top: 5px; /* Add margin on top to separate from the header */
+}
+
+.react-datepicker {
+  z-index: 1000; /* A high z-index to keep the date picker on top */
+}
+

@@ -133,6 +133,10 @@ const App = () => {
                     dateFormat="dd/MM/yyyy" // Display the selected date format
                     className="date-picker" // Assign class for styling
                     placeholderText="Select Event Date" // Placeholder text
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
                 />
                 
                 <button onClick={fetchAthletes}>Fetch Data</button>
