@@ -63,10 +63,13 @@ const App = () => {
             try {
                 setLoading(true);
                 
-                // Ensure the date is in YYYY-MM-DD format
-                const newFormattedDate = eventDate ? eventDate.toISOString().split('T')[0] : '';
-                setFormattedDate(newFormattedDate);
-    
+                // Format the Date object to DD/MM/YYYY for the API request
+                const day = eventDate.getDate().toString().padStart(2, '0'); // Get day
+                const month = (eventDate.getMonth() + 1).toString().padStart(2, '0'); // Get month (zero-based)
+                const year = eventDate.getFullYear(); // Get year
+                const newFormattedDate = `${day}/${month}/${year}`; // Format as DD/MM/YYYY
+                setFormattedDate(newFormattedDate);  
+
                 // Log the URL to be fetched
                 const fetchUrl = `https://hello-world-9yb9.onrender.com/api/eventpositions?event_code=${eventCode}&event_date=${newFormattedDate}`;
                 console.log("Fetching data from URL:", fetchUrl);
