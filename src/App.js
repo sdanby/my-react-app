@@ -62,27 +62,36 @@ const App = () => {
         if (eventCode && eventDate) {
             try {
                 setLoading(true);
-                // Format the Date Object to YYYY-MM-DD for API request
+                
+                // Ensure the date is in YYYY-MM-DD format
                 const newFormattedDate = eventDate ? eventDate.toISOString().split('T')[0] : '';
                 setFormattedDate(newFormattedDate);
-
-                const response = await fetch(`https://hello-world-9yb9.onrender.com/api/eventpositions?event_code=${eventCode}&event_date=${newFormattedDate}`); // Your Flask API URL
+    
+                // Log the URL to be fetched
+                const fetchUrl = `https://hello-world-9yb9.onrender.com/api/eventpositions?event_code=${eventCode}&event_date=${newFormattedDate}`;
+                console.log("Fetching data from URL:", fetchUrl);
                 
+                const response = await fetch(fetchUrl);
+                
+                // Log the response status
+                console.log("Response status:", response.status);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
+                console.log("Fetched data:", data); // Log the fetched data
                 setAthletes(data); // Set the athletes data
-                setError(null); // Clear any previous error
+                setError(null);
             } catch (err) {
-                setError(err.message); // Set error message
+                setError(err.message);
             } finally {
-                setLoading(false); // Stop loading
+                setLoading(false);
             }
         } else {
             alert('Please enter both Event Name and Event Date.');
         }
     };
+    
 
     return (
         <div className="app-container">
