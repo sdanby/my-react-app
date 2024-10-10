@@ -36,6 +36,11 @@
     transform: rotate(360deg);
   }
 }
+.react-datepicker {
+  z-index: 1000; /* A high z-index to keep the date picker on top */
+}
+
+
 
 .app-container {
   padding: 20px;
@@ -59,29 +64,48 @@
   z-index: 10; /* Ensure header is on top of table data */
 }
 
+/* Mobile CSS adjustments */
 @media (max-width: 600px) {
-  .athletes-table {
-      display: block; /* Make table block to allow scrolling */
-      overflow-x: auto; /* Allow horizontal scrolling */
-      white-space: nowrap; /* Prevent table data from wrapping */
+  .input-container {
+      flex-direction: column; /* Stack form elements vertically on mobile */
+  }
+
+  .input-container select,
+  .input-container .date-picker,
+  .input-container button {
+      width: 100%; /* Full width on mobile */
+      margin-right: 0; /* No right margin for full width */
+      margin-bottom: 10px; /* Space between elements */
   }
 }
 .input-container {
-  display: flex; /* Use flexbox for horizontal layout */
+  display: flex; /* Arrange inputs in a row */
+  flex-direction: row; /* Ensure they are in a row */
   align-items: center; /* Center items vertically */
-  margin: 15px 0; /* Margin for spacing between input and other components */
+  margin: 15px 0; /* Margin for spacing */
 }
 
 .input-container select,
 .input-container .date-picker,
 .input-container button {
-    padding: 8px; /* Padding for comfort */
-    font-size: 16px; /* Font size */
-    margin-right: 10px; /* Right margin for spacing between elements */
+    padding: 10px; /* Consistent padding for comfort */
+    font-size: 16px; /* Adjust font size for readability */
+    margin-right: 10px; /* Margin between inputs */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 4px; /* Rounded corners for a rectangular appearance */
+    width: auto; /* Allow browsers to choose the best width */
+    min-width: 150px; /* Set a minimum width for mobile */
 }
 
+/*
 .date-picker {
   width: 150px; /* Adjust width to make it smaller */
+
+
+.date-picker {
+  /* Make the date picker styled consistently */
+  display: inline-block; 
+  margin-top: 5px; /* Add margin on top to separate from the header */
 }
 
 .react-datepicker {
