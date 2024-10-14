@@ -99,7 +99,8 @@ const App = () => {
     // Function to start scraping
     const startScraping = async () => {
         try {
-            const response = await fetch('http://localhost:5000/start-scraping', { // Ensure this matches your Flask endpoint
+            //const response = await fetch('http://localhost:5000/start-scraping', { // Ensure this matches your Flask endpoint
+            const response = await fetch('https://5b95-2a02-c7c-a605-fe00-59de-e834-1f19-7460.ngrok-free.app',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -117,7 +118,7 @@ const App = () => {
     return (
         <div className="app-container">
             <h1>Event Positions</h1>
-            
+
             {/* Button to Start Scraping */}
             <button onClick={startScraping} style={{ margin: '10px' }}>
                 Start Scraping
