@@ -96,10 +96,32 @@ const App = () => {
         }
     };
     
+    // Function to start scraping
+    const startScraping = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/start-scraping', { // Ensure this matches your Flask endpoint
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ loopEvents: true }) // Send loopEvents as true
+            });
+
+            const data = await response.json();
+            alert(data.message || data.error); // Display success or error message
+        } catch (error) {
+            alert('An error occurred: ' + error.message); // Catch any fetch errors
+        }
+    };
 
     return (
         <div className="app-container">
             <h1>Event Positions</h1>
+            
+            {/* Button to Start Scraping */}
+            <button onClick={startScraping} style={{ margin: '10px' }}>
+                Start Scraping
+            </button>
 
             <div className="input-container">
                 {/* Dropdown to select events */}
