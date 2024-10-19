@@ -100,7 +100,7 @@ const App = () => {
     const startScraping = async () => {
         try {
             //const response = await fetch('http://localhost:5000/start-scraping', { // Ensure this matches your Flask endpoint
-            const response = await fetch('https://4725-2a02-c7c-a605-fe00-55fd-1a6c-c681-6cea.ngrok-free.app/start-scraping',{
+            const response = await fetch('https://17a3-2a02-c7c-a605-fe00-55fd-1a6c-c681-6cea.ngrok-free.app/start-scraping',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
