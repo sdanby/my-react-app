@@ -14,6 +14,8 @@ const App = () => {
     const [parkrunEvents, setParkrunEvents] = useState([]); // New state to hold parkrun events
     const [menuOption, setMenuOption] = useState('');  // State to manage menu selection
 
+
+
     // Function to format the date from YYYY-MM-DD to DD/MM/YYYY
     // Function to convert a Date object to required string format
     const formatDate = (date) => {
