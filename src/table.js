@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import './App.css'; // Ensure to import your CSS file for styling
+import './App.css'; 
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css"; // Importing the CSS for the date picker
+import "react-datepicker/dist/react-datepicker.css";
 
 const App = () => {
     const [athletes, setAthletes] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [eventCode, setEventCode] = useState(''); // This will hold the event code
-    const [eventDate, setEventDate] = useState(''); // This will hold the event date
+    const [eventCode, setEventCode] = useState('');
+    const [eventDate, setEventDate] = useState(null);
     const [formattedDate, setFormattedDate] = useState('');
-    const [events, setEvents] = useState([]); // State to hold events
-    const [parkrunEvents, setParkrunEvents] = useState([]); // New state to hold parkrun events
+    const [events, setEvents] = useState([]);
     const [menuOption, setMenuOption] = useState('');  // State to manage menu selection
 
     // Function to format the date from YYYY-MM-DD to DD/MM/YYYY
@@ -38,65 +37,44 @@ const App = () => {
             return 'Invalid time format'; // Handle unexpected formats
         }
     }
-    // Fetch events from Flask API when the component mounts
+
     useEffect(() => {
         const fetchEvents = async () => {
             try {
                 const response = await fetch('https://hello-world-9yb9.onrender.com/api/events'); 
-                if (!response.ok) throw new Error('Failed to fetch events');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch events');
+                }
                 const data = await response.json();
-                setEvents(data);
+                setEvents(data); 
             } catch (err) {
                 console.error('Error fetching events:', err);
                 setError(err.message);
             }
         };
+
         fetchEvents();
     }, []);
-    useEffect(() => {
-        const fetchParkrunEvents = async () => {
-            if (eventCode) {
-                try {
-                    const response = await fetch(`https://hello-world-9yb9.onrender.com/api/parkrun_events?event_code=${eventCode}`);
-                    if (!response.ok) throw new Error('Failed to fetch parkrun events');
-                    const data = await response.json();
-                    setParkrunEvents(data); // Set parkrun events data
-                } catch (err) {
-                    console.error('Error fetching parkrun events:', err);
-                    setError(err.message);
-                }
-            }
-        };
-        fetchParkrunEvents();
-    }, [eventCode]);
-    // Function to fetch athletes based on selected event code and date
+
     const fetchAthletes = async () => {
         if (eventCode && eventDate) {
             try {
                 setLoading(true);
-                
-                // Format the Date object to DD/MM/YYYY for the API request
-                const day = eventDate.getDate().toString().padStart(2, '0'); // Get day
-                const month = (eventDate.getMonth() + 1).toString().padStart(2, '0'); // Get month (zero-based)
-                const year = eventDate.getFullYear(); // Get year
-                const newFormattedDate = `${day}/${month}/${year}`; // Format as DD/MM/YYYY
-                //const newFormattedDate = eventDate ? formatDate(eventDate) : ''; // Format Date
-                setFormattedDate(newFormattedDate);  
+                const day = eventDate.getDate().toString().padStart(2, '0');
+                const month = (eventDate.getMonth() + 1).toString().padStart(2, '0');
+                const year = eventDate.getFullYear();
+                const newFormattedDate = `${year}-${month}-${day}`; 
+                setFormattedDate(`${day}/${month}/${year}`);
 
-                // Log the URL to be fetched
                 const fetchUrl = `https://hello-world-9yb9.onrender.com/api/eventpositions?event_code=${eventCode}&event_date=${newFormattedDate}`;
                 console.log("Fetching data from URL:", fetchUrl);
                 
                 const response = await fetch(fetchUrl);
-                
-                // Log the response status
-                console.log("Response status:", response.status);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                console.log("Fetched data:", data); // Log the fetched data
-                setAthletes(data); // Set the athletes data
+                setAthletes(data); 
                 setError(null);
             } catch (err) {
                 setError(err.message);
@@ -104,37 +82,38 @@ const App = () => {
                 setLoading(false);
             }
         } else {
-            alert('Please enter both Event Name and Event Date.');
+            alert('Please select both an Event and a Date.');
         }
     };
-    // Function to start scraping
+
     const startScraping = async () => {
         try {
-            //const response = await fetch('http://localhost:5000/start-scraping', { // Ensure this matches your Flask endpoint
-            const response = await fetch('https://bec0-2a02-c7c-a605-fe00-7c2c-adcf-1b1-4018.ngrok-free.app/start-scraping',{
+            const response = await fetch('https://fc53-2a02-c7c-a605-fe00-55fd-1a6c-c681-6cea.ngrok-free.app/start-scraping', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ loopEvents: true }) // Send loopEvents as true
+                body: JSON.stringify({ loopEvents: true })
             });
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            const data = await response.json();
-            alert(data.message || data.error); // Display success or error message
+            const data = await response.json(); 
+            alert(data.message || data.error); 
         } catch (error) {
-            alert('An error occurred: ' + error.message); // Catch any fetch errors
+            alert('An error occurred: ' + error.message);
         }
     };
+
     const groupEventsByMonth = () => {
         const groupedData = {};
-        parkrunEvents.forEach(event => {
-            const eventDate = new Date(event.event_date); 
+        events.forEach(event => {
+            const eventDate = new Date(event.event_date); // Assumes event_date is in 'YYYY-MM-DD' format
             const monthYear = `${eventDate.toLocaleString('default', { month: 'long' })} - ${eventDate.getFullYear()}`;
-            const weekNumber = Math.ceil(eventDate.getDate() / 7); 
+            const weekNumber = Math.ceil(eventDate.getDate() / 7); // Calculate week number (1-5)
             
+            // Initialize grouped data for the month/year if it does not exist
             if (!groupedData[monthYear]) {
                 groupedData[monthYear] = {
                     date: monthYear,
@@ -145,65 +124,71 @@ const App = () => {
                     wk5: null
                 };
             }
+
+            // Create week key (wk1, wk2, etc.)
             const weekKey = `wk${weekNumber}`;
+            // Format the data for the cell
             const eventInfo = `${event.event_code}:${event.last_position}(${event.volunteers})`; 
+            
+            // Fill the appropriate week slot in the month object
             groupedData[monthYear][weekKey] = eventInfo;
         });
+
+        // Convert the grouped data object back to an array for rendering
         return Object.values(groupedData);
     };
+
     return (
         <div className="app-container">
             <h1>Parkrun Events</h1>
+
             {/* Menu to select options */}
             <div className="menu">
                 <button onClick={() => setMenuOption('viewEvents')}>Event and Date Report</button>
-                <button onClick={() => setMenuOption('scrapping')}>Start Scraping</button>
+                <button onClick={startScraping}>Start Scraping</button>
                 <button onClick={() => setMenuOption('viewTable')}>View Events Table</button>
             </div>
-            {menuOption === 'scrapping' && (
-                <div>            {/* Button to Start Scraping */}
-                    <h2>Scrapping Control</h2>
-                    <button onClick={startScraping} style={{ margin: '10px' }}>
-                        Start Scraping
-                    </button>
-                </div>
-            )}
+
+            {/* Render based on selected menu option */}
             {menuOption === 'viewEvents' && (
                 <div>
                     <h2>Fetch Event Athletes</h2>
-                    <div className="input-container">
-                        {/* Dropdown to select events */}
-                        <select 
-                            id="event-select" 
-                            value={eventCode} 
-                            onChange={(e) => setEventCode(e.target.value)} 
-                            required
-                        >
-                            <option value="">Select Event</option>
-                            {events.map(event => (
-                                <option key={event.event_code} value={event.event_code}>
-                                    {event.event_name}
-                                </option>
-                            ))}
-                        </select>
 
-                        <DatePicker
-                            selected={eventDate}
-                            onChange={(date) => setEventDate(date)} // Update state with chosen date
-                            dateFormat="dd/MM/yyyy" // Display the selected date format
-                            className="date-picker" // Assign class for styling
-                            placeholderText="Select Event Date" // Placeholder text
-                            peekNextMonth
-                            showMonthDropdown
-                            showYearDropdown
-                            dropdownMode="select"
-                        />
-                        
-                        <button onClick={fetchAthletes}>Fetch Data</button>
-                    </div>
+                    {/* Dropdown to select parkrun events */}
+                    <select 
+                        id="event-select" 
+                        value={eventCode} 
+                        onChange={(e) => setEventCode(e.target.value)} 
+                        required
+                    >
+                        <option value="">Select Event</option>
+                        {events.map(event => (
+                            <option key={event.event_code} value={event.event_code}>
+                                {event.event_name}
+                            </option>
+                        ))}
+                    </select>
+
+                    {/* Date Picker for selecting event date */}
+                    <DatePicker
+                        selected={eventDate}
+                        onChange={(date) => setEventDate(date)} // Update state with chosen date
+                        dateFormat="dd/MM/yyyy" // Display the selected date format
+                        className="date-picker" // Assign class for styling
+                        placeholderText="Select Event Date" // Placeholder text
+                        peekNextMonth
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="select"
+                    />
+                    
+                    <button onClick={fetchAthletes}>Fetch Data</button>
+
                     {formattedDate && <h2 className="selected-date">Selected Date: {formattedDate}</h2>} 
+
                     {loading && <div>Loading...</div>}
                     {error && <div className="error">Error: {error}</div>}
+
                     <table className="athletes-table">
                         <thead>
                             <tr>
@@ -231,26 +216,11 @@ const App = () => {
 
                         </tbody>
                     </table>
-                 </div>
+                </div>
             )}
+
             {menuOption === 'viewTable' && (
                 <div>
-                <h2>Select a Parkrun Event</h2>
-                    <div className="input-container">
-                        <select 
-                            id="event-select" 
-                            value={eventCode} 
-                            onChange={(e) => setEventCode(e.target.value)} 
-                            required
-                        >
-                            <option value="">Select Event</option>
-                            {events.map(event => (
-                                <option key={event.event_code} value={event.event_code}>
-                                    {event.event_name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
                     <h2>Events Table</h2>
                     <table className="events-table">
                         <thead>
@@ -278,8 +248,9 @@ const App = () => {
                     </table>
                 </div>
             )}
-       </div>
+        </div>
     );
 };
 
 export default App;
+

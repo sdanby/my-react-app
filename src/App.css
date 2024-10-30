@@ -36,3 +36,133 @@
     transform: rotate(360deg);
   }
 }
+.react-datepicker {
+  z-index: 1000; /* A high z-index to keep the date picker on top */
+}
+
+body {
+  font-family: Arial, sans-serif; /* Sets a default font for the application */
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  padding: 20px;
+}
+
+.athletes-table {
+  width: 100%; /* Full width for the table */
+  border-collapse: collapse; /* Merge borders */
+}
+
+.athletes-table th, .athletes-table td {
+  text-align: left; /* Left align text */
+  padding: 8px; /* Cell padding */
+  border: 1px solid #d3d3d3; /* Thin grey grid */
+}
+
+.athletes-table th {
+  background-color: #f2f2f2; /* Light gray background for header */
+  position: sticky; /* Sticky header */
+  top: 0; /* Remain at the top of the table */
+  /*z-index: 10; /* Ensure header is on top of table data */
+}
+
+/* Mobile CSS adjustments */
+@media (max-width: 600px) {
+  .input-container {
+      flex-direction: column; /* Stack form elements vertically on mobile */
+  }
+
+  .input-container select,
+  .input-container .date-picker,
+  .input-container button {
+      width: 100%; /* Full width on mobile */
+      margin-right: 0; /* No right margin for full width */
+      margin-bottom: 10px; /* Space between elements */
+  }
+}
+.input-container {
+  display: flex; /* Arrange inputs in a row */
+  flex-direction: row; /* Ensure they are in a row */
+  align-items: center; /* Center items vertically */
+  margin: 15px 0; /* Margin for spacing */
+}
+
+.input-container select,
+.input-container .date-picker,
+.input-container button {
+    padding: 10px; /* Consistent padding for comfort */
+    font-size: 16px; /* Adjust font size for readability */
+    margin-right: 10px; /* Margin between inputs */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 4px; /* Rounded corners for a rectangular appearance */
+    width: auto; /* Allow browsers to choose the best width */
+    min-width: 150px; /* Set a minimum width for mobile */
+    margin-bottom: 20px; /* Space below input container for better layout */
+
+}
+
+
+.date-picker {
+  /* Make the date picker styled consistently */
+  display: inline-block; 
+  margin-top: 5px; /* Add margin on top to separate from the header */
+}
+
+.react-datepicker {
+  z-index: 1000; /* A high z-index to keep the date picker on top */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #f2f2f2;  /* Light grey background for header */
+}
+tr:nth-child(even) {
+  background-color: #f9f9f9;  /* Alternating row color for better readability */
+}
+
+tr:hover {
+  background-color: #f1f1f1;   /* Highlight color on hover */
+}
+
+/* Menu Styles */
+.menu {
+  margin-bottom: 20px; /* Space below the menu */
+}
+
+/* Button Styles */
+button {
+  background-color: #4CAF50; /* Green background for buttons */
+  color: white;              /* White text color */
+  border: none;              /* Remove default borders */
+  padding: 10px 15px;       /* Padding for buttons */
+  text-align: center;        /* Center text in buttons */
+  text-decoration: none;     /* Remove underline */
+  display: inline-block;     /* Keep buttons next to each other */
+  margin: 4px 2px;          /* Space between buttons */
+  cursor: pointer;           /* Pointer cursor on hover */
+  border-radius: 5px;       /* Rounded corners */
+}
+
+button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Loading and Error Messages */
+.loading {
+  font-weight: bold; /* Make loading text bold */
+}
+
+.error {
+  color: red; /* Red color for error messages */
+  font-weight: bold; /* Make error text bold */
+}
