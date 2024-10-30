@@ -107,7 +107,7 @@ const App = () => {
             alert('Please enter both Event Name and Event Date.');
         }
     };
-    // Function to start scraping
+    // Function to start scraping 
     const startScraping = async () => {
         try {
             //const response = await fetch('http://localhost:5000/start-scraping', { // Ensure this matches your Flask endpoint
